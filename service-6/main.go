@@ -1,12 +1,15 @@
 package main
 import (
-    "fmt"
-    "net/http"
+	"fmt"
+	"math/rand"
+	"net/http"
+	"time"
 )
 func main() {
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintf(w, "Hello from Golang Service 6!")
-    })
-    fmt.Println("Service 6 listening on port 8080...")
-    http.ListenAndServe(":8080", nil)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		rand.Seed(time.Now().UnixNano())
+		roll := rand.Intn(6) + 1
+		fmt.Fprintf(w, "--- Virtual Dice Roller ---\n\nYou rolled a: %d 🎲", roll)
+	})
+	http.ListenAndServe(":8080", nil)
 }

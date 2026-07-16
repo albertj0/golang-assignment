@@ -1,12 +1,14 @@
 package main
 import (
-    "fmt"
-    "net/http"
+	"fmt"
+	"net/http"
+	"strings"
 )
 func main() {
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintf(w, "Hello from Golang Service 7!")
-    })
-    fmt.Println("Service 7 listening on port 8080...")
-    http.ListenAndServe(":8080", nil)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		text := r.URL.Query().Get("text")
+		count := len(strings.Fields(text))
+		fmt.Fprintf(w, "--- Word Counter ---\nQuery parameters: ?text=your sentence here\n\nWord Count: %d", count)
+	})
+	http.ListenAndServe(":8080", nil)
 }

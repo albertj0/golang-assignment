@@ -1,12 +1,12 @@
 package main
 import (
-    "fmt"
-    "net/http"
+	"fmt"
+	"net/http"
+	"time"
 )
 func main() {
-    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintf(w, "Hello from Golang Service 10!")
-    })
-    fmt.Println("Service 10 listening on port 8080...")
-    http.ListenAndServe(":8080", nil)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "--- System Timestamp Service ---\n\nCurrent Server Time: %s", time.Now().Format(time.RFC1123))
+	})
+	http.ListenAndServe(":8080", nil)
 }
